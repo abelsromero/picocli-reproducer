@@ -1,0 +1,32 @@
+plugins {
+	id 'application'
+	id 'org.graalvm.buildtools.native'
+}
+
+dependencies {
+	annotationProcessor "info.picocli:picocli-codegen:$picocliVersion"
+	implementation "info.picocli:picocli:$picocliVersion"
+
+	testImplementation platform("org.junit:junit-bom:$junitVersion")
+	testImplementation "org.assertj:assertj-core:3.25.3"
+}
+
+compileJava {
+	options.compilerArgs += ["-Aproject=${project.group}/${project.name}"]
+}
+
+application {
+	mainClass = 'org.abelsromero.picocli.App'
+}
+
+graalvmNative {
+	binaries {
+		main {
+			imageName = "cli"
+			mainClass = application.mainClass
+		}
+		all {
+			buildArgs.addAll('-H:IncludeResources=".*\\.gradle$', '--enable-url-protocols=https');
+		}
+	}
+}

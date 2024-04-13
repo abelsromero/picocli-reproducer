@@ -1,0 +1,28 @@
+= Picocli example of not parsed command in IExecutionExceptionHandler
+
+Related to https://github.com/remkop/picocli/issues/2228
+
+== How to test
+
+Run `./scripts/run.sh` to build and run an example command.
+
+In the expected command output it's show how the injected `ParseResult` is empty.
+But my expectation is that it should contain the parsed elements.
+
+.Expected command output
+----
+Getting...
+[INFO] From ExecutionExceptionHandler ----
+        Exception: java.lang.RuntimeException: Boom!
+        CommandLine: picocli.CommandLine@2fc14f68
+        ParseResult from method: picocli.CommandLine$ParseResult@7006c658
+                matchedArgs(): []
+                matchedOptions(): []
+        ParseResult from commandLine.getParseResult(): picocli.CommandLine$ParseResult@34033bd0
+                matchedArgs(): [field boolean org.abelsromero.picocli.SharedOptions.fail]
+                matchedOptions(): [field boolean org.abelsromero.picocli.SharedOptions.fail]
+----
+
+== How to debug
+
+Run `./scripts/debug.sh` and initiate a Java remote debug on port 8000.

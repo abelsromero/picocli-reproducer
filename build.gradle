@@ -1,0 +1,21 @@
+buildscript {
+  ext {
+    junitVersion = '5.10.2'
+    picocliVersion = '4.7.5'
+  }
+}
+
+allprojects {
+  apply plugin: 'base'
+  apply plugin: 'java'
+
+  java {
+    toolchain {
+      languageVersion.set(JavaLanguageVersion.of(17))
+    }
+  }
+}
+
+subprojects {
+  apply plugin: 'java'
+}
